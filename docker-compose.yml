@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container_dev_2
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword  # Set your PostgreSQL password here
+    ports:
+      - "5432:5432"  # Expose PostgreSQL on port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data
+
+  citus_master:
+    image: citusdata/citus
+    container_name: citus_master
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword  # Same password as PostgreSQL
+    ports:
+      - "5500:5432"  # Expose Citus coordinator on port 5500
+
+  citus_worker_1:
+    image: citusdata/citus
+    container_name: citus_worker_1
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+
+  citus_worker_2:
+    image: citusdata/citus
+    container_name: citus_worker_2
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+
+  citus_worker_3:
+    image: citusdata/citus
+    container_name: citus_worker_3
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+
+volumes:
+  postgres_data:
